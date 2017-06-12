@@ -1,7 +1,10 @@
 $(function(){
+  var addParticleInDecreasingTime = function(){
+
+  }
+
   var maxX = 300
-  var maxY = 300
-  var intervalForNewPart = 150//ms
+  var intervalForNewPart = 200//ms
 
   var svgCanvas = $('#particleSVG').get(0)
   var widthSVG = svgCanvas.width.baseVal.value
@@ -11,16 +14,25 @@ $(function(){
   svgCanvas.setAttribute('height', '100%')
 
   var snapSVG = Snap('#particleSVG')
-  var particles = []
-  for(var numParticles = 0; numParticles < 15; numParticles++)
-  {
-    var tempParticle = new Particle(maxX,maxY)
-    particles.push(tempParticle.addToSnap(snapSVG))
-  }
 
   var addingParticles = setInterval(function(){
-    var tempParticle = new Particle(maxX, maxY)
-    particles.push(tempParticle.addToSnap(snapSVG))
+    addParticle(maxX,snapSVG)
   }, intervalForNewPart)
+
+  easeElementIn($('#name').get(0),1000)
+  easeElementIn($('#subtitle').get(0),2000)
 })
+
+var easeElementIn = function(element, time)
+{
+  setTimeout(function(){
+    element.className += ' visible'
+  },time)
+}
+
+var addParticle = function(maxX, snap)
+{
+  var tempParticle = new Particle(maxX)
+  tempParticle.addToSnap(snap)
+}
 

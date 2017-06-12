@@ -4,16 +4,15 @@
 
 var colors = ['#FCE38A', '#EAFFD0', '#95E1D3']
 
-function Particle( maxX, maxY, snap, life, radius, color, opacity)
+function Particle( maxX, snap, life, radius, color, opacity)
 {
   this.life = life|| generateLifeTime(10)
   this.radius = radius || generateRadius(5, 25)
   this.color = color||randomColorChooser()
   this.opacity = opacity||generateOpacity(.5)
   this.x =  Math.floor(Math.random() * maxX) || 100
-  this.y =  Math.floor(Math.random() * 350) - 100 || 100 // -100 -> 200
-  this.animationTime = 3000 //ms
-  console.log(this.x,this.y)
+  this.y = 260,
+  this.animationTime = generateAnimationTime(8000, 2000)
 }
 
 Particle.prototype.addToSnap = function(snap)
@@ -23,12 +22,19 @@ Particle.prototype.addToSnap = function(snap)
     fill: this.color,
     fillOpacity: this.opacity,
   })
-  out.animate({r: generateRadius(5,60)}, this.animationTime)
+
+  out.animate({transform: 't0 -330'}, this.animationTime)
+  //out.animate({r: generateRadius(5,60)}, this.animationTime)
   var fadeOut = this.animationTime / 2
   setTimeout(function(){
-    out.animate({opacity: '0'}, fadeOut) //((opacity, animatoin length), start time)
-  }, fadeOut)
+    out.animate({opacity: '0',}, fadeOut) //((opacity, animatoin length), start time)
+  }, fadeOut - 1000)
   return out
+}
+
+var generateAnimationTime = function(maxTime, range)
+{
+  return Math.floor(Math.random() * range + maxTime - range)
 }
 
 var generateLifeTime = function(maxLife)
