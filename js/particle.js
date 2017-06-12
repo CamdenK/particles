@@ -12,7 +12,7 @@ function Particle( maxX, snap, life, radius, color, opacity)
   this.opacity = opacity||generateOpacity(.5)
   this.x =  Math.floor(Math.random() * maxX) || 100
   this.y = 260,
-  this.animationTime = generateAnimationTime(8000, 2000)
+  this.animationTime = generateAnimationTime(9000, 2000)
 }
 
 Particle.prototype.addToSnap = function(snap)
@@ -24,11 +24,12 @@ Particle.prototype.addToSnap = function(snap)
   })
 
   out.animate({transform: 't0 -330'}, this.animationTime)
-  //out.animate({r: generateRadius(5,60)}, this.animationTime)
-  var fadeOut = this.animationTime / 2
+
+  var fadeStart = this.animationTime / 2 - 1000;
+  var fadeLength = this.animationTime - fadeStart;
   setTimeout(function(){
-    out.animate({opacity: '0',}, fadeOut) //((opacity, animatoin length), start time)
-  }, fadeOut - 1000)
+    out.animate({opacity: '0',}, fadeLength) //((opacity, animatoin length), start time)
+  }, fadeStart)
   return out
 }
 
